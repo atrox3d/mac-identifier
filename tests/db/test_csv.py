@@ -49,7 +49,7 @@ def test_load_txt_csv(router_txt_path):
 
 def test_get_dhcp_table(router_txt_path):
     df = csv.load_txt_csv(router_txt_path)
-    df = csv.get_dhcp_table(df, 1, 2, ':', '-')
+    df = csv.get_dhcp_table(df, 1, ':', '-')
     print(df.columns)
     print(df)
 

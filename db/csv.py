@@ -3,7 +3,8 @@ import pandas as pd
 
 # Matches tabs OR 2+ whitespace characters.
 # This allows descriptions to contain single spaces (e.g., "tv LG") without breaking the row.
-SEP_REGEX = r'\t+|\s+'
+# SEP_REGEX = r'\t+|\s+'
+SEP_REGEX = r'\s+'
 INFER_HEADER = 0
 
 
