@@ -52,6 +52,12 @@ def test_get_dhcp_table(router_txt_path):
     df = csv.get_dhcp_table(df, 1, ':', '-')
     print(df.columns)
     print(df)
+    # Explicitly filter for True values and then count them
+    matches = df.iloc[:, 1].str.contains(':')
+    print(matches[matches == True].count())
+    assert matches[matches == True].count() == 0
+
+
 
 
 def test_load_mymacs(mymacs_txt_path):
