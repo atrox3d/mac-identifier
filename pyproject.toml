@@ -8,3 +8,45 @@ dependencies = [
     "pandas>=2.3.3",
     "pytest>=9.0.2",
 ]
+
+# https://docs.pytest.org/en/stable/reference/customize.html#pyproject-toml
+# https://docs.pytest.org/en/stable/explanation/pythonpath.html#pythonpath
+[tool.pytest]
+log_cli = true
+log_level = "DEBUG"
+# log_cli_format = %(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)
+log_cli_format = "%(asctime)s | %(levelname)-8s | %(module)10s | %(funcName)15s | %(message)s"
+log_cli_date_format="%Y-%m-%d %H:%M:%S"
+
+testpaths = ["tests"]   # ignored in vscode if values are wrong
+                        # vscode python.testing.pytestArgs has precedence if specified
+
+# addopts = ["-svrA"]
+addopts = ["-s"]
+# markers =
+#     smoke:      Smoke Test
+#     regression: Regression Test
+#     sanity
+#     integration:
+
+# addopts = -rA -v --html=AutomatonPytestReport.html
+# addopts = -sv
+# -s capture=no
+# -v verbose
+# -r extra summary A=ALl
+
+# fixes collect error with same file names in different folders
+# addopts = "--import-mode=importlib"
+
+# addopts = -vvrA --import-mode=importlib
+# addopts = -svvrA --import-mode=importlib
+# addopts = -vvrA
+
+# python_files = part*.py test_*.py functions.py
+# python_functions = test_solution_* test_*
+
+# norecursedirs = experiments
+# testpaths = 'y2015/d22' tests
+
+
+# pythonpath = "${PWD}"
