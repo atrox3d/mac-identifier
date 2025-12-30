@@ -29,20 +29,11 @@ def load_txt_csv(
 
 def get_mac_ref_table(
     df:pd.DataFrame,
-    # ip_column:int|str,
     descr_col:int|str,
     mac_col:int|str,
     sep:str,
-    replace:str=':'
+    replace:str
 ) -> pd.DataFrame:
-    """
-    Extracts and cleans IP and MAC columns from a DataFrame.
-    
-    Args:
-        ip_column: Name (str) or index (int) of the IP column.
-        mac_column: Name (str) or index (int) of the MAC column.
-    """
-    # mac_col = df.columns[mac_column] if isinstance(mac_column, int) else mac_column
     cols = [
         df.columns[col] if isinstance(col, int) else col
         for col in [descr_col, mac_col]
@@ -55,4 +46,16 @@ def get_mac_ref_table(
     )
     df = df[[mac, descr]]
     df.columns = ['mac', 'name']
+    return df
+
+
+def merge_and_fill(
+    left_df: pd.DataFrame,
+    right_df: pd.DataFrame,
+    on: str,
+    fill_col: str,
+    fill_val: str = 'UNKNOWN'
+) -> pd.DataFrame:
+    df = pd.merge(left_df, right_df, on=on, how='left')
+    df[fill_col] = df[fill_col].fillna(fill_val)
     return df
