@@ -8,6 +8,7 @@ dependencies = [
     "pandas>=2.3.3",
     "pytest>=9.0.2",
     "python-dotenv>=1.2.1",
+    "typer>=0.21.0",
 ]
 
 # https://docs.pytest.org/en/stable/reference/customize.html#pyproject-toml
