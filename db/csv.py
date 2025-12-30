@@ -1,26 +1,26 @@
 from pathlib import Path
 import pandas as pd
 
-# Matches tabs OR 2+ whitespace characters.
-# This allows descriptions to contain single spaces (e.g., "tv LG") without breaking the row.
-# SEP_REGEX = r'\t+|\s+'
 SEP_REGEX = r'\s+'
 INFER_HEADER = 0
 
 
-def load_txt_csv(
+def load_csv(
         filepath:str | Path, 
         header=INFER_HEADER,
         separator:str=SEP_REGEX,
-        names=None,
+        # names=None,
         comment:str='#',
         **kwargs
 ) -> pd.DataFrame:
+    '''
+    raises: pandas.errors.EmptyDataError if file is empty
+    '''
     df = pd.read_csv(
         filepath,
         sep=separator,
         header=header,
-        names=names,
+        # names=names,
         comment=comment,
         **kwargs
     )
@@ -32,20 +32,29 @@ def get_mac_ref_table(
     descr_col:int|str,
     mac_col:int|str,
     sep:str,
-    replace:str
+    replace:str,
+    mac_col_name:str='mac',
+    name_col_name:str='name'
 ) -> pd.DataFrame:
+    
+    # get column names as str from int idx or name
     cols = [
         df.columns[col] if isinstance(col, int) else col
         for col in [descr_col, mac_col]
     ]
     descr, mac = cols
+    
+    # fix mac format
     df[mac] = df[mac].str.replace(
         sep,
         replace,
         regex=False
     )
+
+    # extract only relevant columns
     df = df[[mac, descr]]
-    df.columns = ['mac', 'name']
+    # rename columns
+    df.columns = [mac_col_name, name_col_name]
     return df
 
 
@@ -56,6 +65,9 @@ def merge_and_fill(
     fill_col: str,
     fill_val: str = 'UNKNOWN'
 ) -> pd.DataFrame:
+    '''
+    left merge two df setting null values to fixed string
+    '''
     df = pd.merge(left_df, right_df, on=on, how='left')
     df[fill_col] = df[fill_col].fillna(fill_val)
     return df
