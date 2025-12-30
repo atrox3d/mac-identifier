@@ -27,7 +27,7 @@ def load_csv(
     return df
 
 
-def get_mac_ref_table(
+def build_mac_ref_table(
     df:pd.DataFrame,
     descr_col:int|str,
     mac_col:int|str,
@@ -56,6 +56,10 @@ def get_mac_ref_table(
     # rename columns
     df.columns = [mac_col_name, name_col_name]
     return df
+
+
+def stack_mac_ref_tables(*dfs:pd.DataFrame) -> pd.DataFrame:
+    return pd.concat(dfs, ignore_index=True)
 
 
 def merge_and_fill(
