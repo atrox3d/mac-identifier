@@ -100,3 +100,8 @@ def test_merge(router_txt_path, known_macs_txt_path: Path, unknown_macs_txt_path
         on='mac', fill_col='name')
     print(merged.columns)
     print(merged)
+    total_unknowns = len(merged[merged['name']=='UNKNOWN'])
+    assert total_unknowns == 2
+    distinct = merged[['mac', 'name']].drop_duplicates()
+    print(distinct)
+    assert len(distinct) == 10
