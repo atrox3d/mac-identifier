@@ -1,10 +1,13 @@
 from pathlib import Path
 import pytest
+from dotenv import load_dotenv, dotenv_values
 
-SECRET_DIR = 'secret'
-ROUTER_TXT = 'router-dhcp.txt'
-MY_MACS = 'my-macs.txt'
-HIS_MACS = 'his-macs.txt'
+# print('CONFTEST.PY', Path.cwd())
+ENV = dotenv_values()
+SECRET_DIR            = ENV.get('SECRET_DIR')
+ROUTER_TXT_FILENAME   = ENV.get('ROUTER_TXT_FILENAME')
+KNOWN_MACS_FILENAME   = ENV.get('KNOWN_MACS_FILENAME')
+UNKNOWN_MACS_FILENAME = ENV.get('UNKNOWN_MACS_FILENAME')
 
 
 @pytest.fixture
@@ -16,20 +19,20 @@ def secret_dir() -> Path:
 
 @pytest.fixture
 def router_txt_path(secret_dir: Path) -> Path:
-    path = secret_dir / ROUTER_TXT
+    path = secret_dir / ROUTER_TXT_FILENAME
     # print(path)
     return path
 
 
 @pytest.fixture
-def mymacs_txt_path(secret_dir: Path) -> Path:
-    path = secret_dir / MY_MACS
+def known_macs_txt_path(secret_dir: Path) -> Path:
+    path = secret_dir / KNOWN_MACS_FILENAME
     # print(path)
     return path
 
 
 @pytest.fixture
-def hismacs_txt_path(secret_dir: Path) -> Path:
-    path = secret_dir / HIS_MACS
+def unknown_macs_txt_path(secret_dir: Path) -> Path:
+    path = secret_dir / UNKNOWN_MACS_FILENAME
     # print(path)
     return path

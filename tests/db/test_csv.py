@@ -24,8 +24,8 @@ def test_get_dhcp_table(router_txt_path: Path):
     assert matches[matches == True].count() == 0
 
 
-def test_load_mymacs(mymacs_txt_path: Path):
-    df = csv.load_txt_csv(mymacs_txt_path, separator=';')
+def test_load_mymacs(known_macs_txt_path: Path):
+    df = csv.load_txt_csv(known_macs_txt_path, separator=';')
     print(df.columns)
     print(df)
     print(df.shape)
@@ -33,8 +33,8 @@ def test_load_mymacs(mymacs_txt_path: Path):
     assert list(df.columns) == ['mac', 'description']
 
 
-def test_get_mymacs_table(mymacs_txt_path: Path):
-    df = csv.load_txt_csv(mymacs_txt_path, separator=';')
+def test_get_mymacs_table(known_macs_txt_path: Path):
+    df = csv.load_txt_csv(known_macs_txt_path, separator=';')
     df = csv.get_mac_ref_table(df, descr_col=1, mac_col=0, sep='-', replace=':')
     print(df.columns)
     print(df)
@@ -43,8 +43,8 @@ def test_get_mymacs_table(mymacs_txt_path: Path):
     assert matches[matches == True].count() == 0
 
 
-def test_load_hismacs(hismacs_txt_path: Path):
-    df = csv.load_txt_csv(hismacs_txt_path, separator=';')
+def test_load_hismacs(unknown_macs_txt_path: Path):
+    df = csv.load_txt_csv(unknown_macs_txt_path, separator=';')
     print(df.columns)
     print(df)
     print(df.shape)
@@ -52,8 +52,8 @@ def test_load_hismacs(hismacs_txt_path: Path):
     assert list(df.columns) == ['mac', 'description']
 
 
-def test_get_hismacs_table(hismacs_txt_path: Path):
-    df = csv.load_txt_csv(hismacs_txt_path, separator=';')
+def test_get_hismacs_table(unknown_macs_txt_path: Path):
+    df = csv.load_txt_csv(unknown_macs_txt_path, separator=';')
     df = csv.get_mac_ref_table(df, descr_col=1, mac_col=0, sep='-', replace=':')
     print(df.columns)
     print(df)
